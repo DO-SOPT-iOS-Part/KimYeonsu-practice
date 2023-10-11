@@ -9,13 +9,24 @@ import UIKit
 
 class ViewController: UIViewController, GetDataProtocol {
     
-    func getLoginData(email: String, password: String) {
-        print("받아온 email: \(email), 받아온 password: \(password)")
+    var inputId: String = ""
+    var inputPasswd: String = ""
+    
+    @IBOutlet weak var switchButton: UISwitch!
+    @IBOutlet weak var googleLogoImg: UIImageView!
+    
+    @IBAction func toggleButton(_ sender: UISwitch) {
+        switchSocialLoginButton()
     }
     
     
-    var inputId: String = ""
-    var inputPasswd: String = ""
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.switchButton.isOn = false
+        googleLogoImg.isHidden = true
+        
+    }
     
     @IBAction func idTextFieldDidEditing(_ sender: Any) {
         guard let textField = sender as? UITextField else {return}
@@ -37,11 +48,13 @@ class ViewController: UIViewController, GetDataProtocol {
         pushToResultVC4()
     }
     
+ 
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    
+    func getLoginData(email: String, password: String) {
+        print("받아온 email: \(email), 받아온 password: \(password)")
     }
+    
     
     // 화면 넘기기
     func pushToResultVC() {
@@ -76,6 +89,16 @@ class ViewController: UIViewController, GetDataProtocol {
             resultVC.loginDataCompletion = { data in
                 print("클로저로 받아온 email: \(data[0]), 클로저로 받아온 password: \(data[1])")
             }
+    }
+    
+    func switchSocialLoginButton() {
+        if self.switchButton.isOn == true {
+            googleLogoImg.isHidden = false
+            print("보여라")
+        } else {
+            googleLogoImg.isHidden = true
+            print("사라져라")
+        }
     }
 
 }
