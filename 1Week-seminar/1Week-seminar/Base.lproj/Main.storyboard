@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="로그인을 진행해주세요" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6xc-DN-jWa">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="로그인" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6xc-DN-jWa">
                                 <rect key="frame" x="24" y="219" width="345" height="29"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <nil key="textColor"/>
@@ -59,6 +59,13 @@
                                     <action selector="loginButtonDidTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uX3-hE-7hp"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo-google" translatesAutoresizingMaskIntoConstraints="NO" id="aTV-eU-znX">
+                                <rect key="frame" x="176.66666666666666" y="139" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="BWu-X7-ppj"/>
+                                    <constraint firstAttribute="width" constant="40" id="f6s-vu-re5"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -74,7 +81,9 @@
                             <constraint firstItem="7I2-k9-Sjs" firstAttribute="top" secondItem="m0e-Ku-xhF" secondAttribute="bottom" constant="64" id="iJE-kZ-NIE"/>
                             <constraint firstItem="m0e-Ku-xhF" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="kTB-bf-8Ls"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="m0e-Ku-xhF" secondAttribute="trailing" constant="32" id="ojx-cn-iaq"/>
+                            <constraint firstItem="aTV-eU-znX" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="pG0-BC-43b"/>
                             <constraint firstItem="7I2-k9-Sjs" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="snW-AP-udP"/>
+                            <constraint firstItem="aTV-eU-znX" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="80" id="w0E-Fa-8jv"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="YRh-Tk-IsQ"/>
@@ -177,6 +186,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="logo-google" width="2048" height="2048"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
