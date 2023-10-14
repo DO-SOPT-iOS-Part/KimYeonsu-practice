@@ -8,7 +8,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -17,70 +17,108 @@ class ViewController: UIViewController {
         setLayout()
     }
     
+    // 스택뷰 생성
+    private var horizontalStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        stackView.spacing = 0
+        
+        return stackView
+    }()
+    
+    private var verticalStackView1: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.spacing = 0
+        
+        return stackView
+    }()
+    
+    private var verticalStackView2: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.spacing = 0
+        
+        return stackView
+    }()
+    
+    private var yellowView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .yellow
+        return view
+    }()
+    
+    private var greenView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .green
+        return view
+    }()
+    
+    private var blackView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        return view
+    }()
+    
+    private var blueView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .blue
+        return view
+    }()
+    
+    private var whiteView1: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    private var whiteView2: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    private var whiteView3: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    private var whiteView4: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+    
     // 바둑판 생성
     private func setLayout() {
-        [myView1, myView2, myView3, myView4].forEach { [weak self] view in
-            guard let self else {return}
-            
-            // 오토사이징마스크로 인한 constraints 충돌을 피하기 위한 코드
-            view.translatesAutoresizingMaskIntoConstraints = false
-            self.view.addSubview(view)
-        }
+        // 스택뷰 레이아웃 생성
+        self.view.addSubview(horizontalStackView)
+        horizontalStackView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([myView1.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0),
-                                     myView1.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0),
-                                     myView1.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width / 2),
-                                     myView1.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height / 4)])
+        NSLayoutConstraint.activate([horizontalStackView.topAnchor.constraint(equalTo: view.topAnchor),
+                                     horizontalStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+                                     horizontalStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                                     horizontalStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor)])
         
-        NSLayoutConstraint.activate([myView2.topAnchor.constraint(equalTo: myView1.bottomAnchor, constant: 0),
-                                     myView2.leadingAnchor.constraint(equalTo: myView1.trailingAnchor, constant: 0),
-                                     myView2.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width / 2),
-                                     myView2.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height / 4)])
+        verticalStackView1.translatesAutoresizingMaskIntoConstraints = false
+        verticalStackView2.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([myView3.topAnchor.constraint(equalTo: myView2.bottomAnchor, constant: 0),
-                                     myView3.leadingAnchor.constraint(equalTo: myView1.leadingAnchor, constant: 0),
-                                     myView3.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width / 2),
-                                     myView3.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height / 4)])
+        verticalStackView1.addArrangedSubview(yellowView)
+        verticalStackView1.addArrangedSubview(whiteView1)
+        verticalStackView1.addArrangedSubview(blackView)
+        verticalStackView1.addArrangedSubview(whiteView2)
         
-        NSLayoutConstraint.activate([myView4.topAnchor.constraint(equalTo: myView3.bottomAnchor, constant: 0),
-                                     myView4.leadingAnchor.constraint(equalTo: myView2.leadingAnchor, constant: 0),
-                                     myView4.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width / 2),
-                                     myView4.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height / 4)])
-
+        verticalStackView2.addArrangedSubview(whiteView3)
+        verticalStackView2.addArrangedSubview(greenView)
+        verticalStackView2.addArrangedSubview(whiteView4)
+        verticalStackView2.addArrangedSubview(blueView)
+        
+        horizontalStackView.addArrangedSubview(verticalStackView1)
+        horizontalStackView.addArrangedSubview(verticalStackView2)
     }
-    
-    // 바둑알 생성
-    let myView1: UIView = {
-        let view = UIView(frame: .init(origin: .zero, size: .init(width: UIScreen.main.bounds.width / 2, height: UIScreen.main.bounds.height / 4)))
-        
-        view.backgroundColor = .yellow
-        view.clipsToBounds = true
-        return view
-    }()
-    
-    let myView2: UIView = {
-        let view = UIView(frame: .init(origin: .zero, size: .init(width: UIScreen.main.bounds.width / 2, height: UIScreen.main.bounds.height / 4)))
-        
-        view.backgroundColor = .green
-        view.clipsToBounds = true
-        return view
-    }()
-    
-    let myView3: UIView = {
-        let view = UIView(frame: .init(origin: .zero, size: .init(width: UIScreen.main.bounds.width / 2, height: UIScreen.main.bounds.height / 4)))
-        
-        view.backgroundColor = .black
-        view.clipsToBounds = true
-        return view
-    }()
-    
-    let myView4: UIView = {
-        let view = UIView(frame: .init(origin: .zero, size: .init(width: UIScreen.main.bounds.width / 2, height: UIScreen.main.bounds.height / 4)))
-        
-        view.backgroundColor = .blue
-        view.clipsToBounds = true
-        return view
-    }()
-
 }
-
+    
