@@ -18,16 +18,17 @@ class ViewController: UIViewController {
     }
     
     // 스택뷰 생성
-    private var horizontalStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.distribution = .fillEqually
-        stackView.spacing = 0
-        
-        return stackView
+    private var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        return scrollView
     }()
     
-    private var verticalStackView1: UIStackView = {
+    private var contentView: UIView = {
+        let contentView = UIView()
+        return contentView
+    }()
+    
+    private var leftStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
@@ -36,7 +37,7 @@ class ViewController: UIViewController {
         return stackView
     }()
     
-    private var verticalStackView2: UIStackView = {
+    private var rightStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
@@ -93,32 +94,56 @@ class ViewController: UIViewController {
         return view
     }()
     
-    // 바둑판 생성
     private func setLayout() {
-        // 스택뷰 레이아웃 생성
-        self.view.addSubview(horizontalStackView)
-        horizontalStackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([horizontalStackView.topAnchor.constraint(equalTo: view.topAnchor),
-                                     horizontalStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-                                     horizontalStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                                     horizontalStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor)])
-        
-        verticalStackView1.translatesAutoresizingMaskIntoConstraints = false
-        verticalStackView2.translatesAutoresizingMaskIntoConstraints = false
-        
-        verticalStackView1.addArrangedSubview(yellowView)
-        verticalStackView1.addArrangedSubview(whiteView1)
-        verticalStackView1.addArrangedSubview(blackView)
-        verticalStackView1.addArrangedSubview(whiteView2)
-        
-        verticalStackView2.addArrangedSubview(whiteView3)
-        verticalStackView2.addArrangedSubview(greenView)
-        verticalStackView2.addArrangedSubview(whiteView4)
-        verticalStackView2.addArrangedSubview(blueView)
-        
-        horizontalStackView.addArrangedSubview(verticalStackView1)
-        horizontalStackView.addArrangedSubview(verticalStackView2)
+            self.view.addSubview(scrollView)
+            scrollView.addSubview(contentView)
+            
+            scrollView.translatesAutoresizingMaskIntoConstraints = false
+            contentView.translatesAutoresizingMaskIntoConstraints = false
+            
+            NSLayoutConstraint.activate([scrollView.topAnchor.constraint(equalTo: self.view.topAnchor),
+                                         scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+                                         scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+                                         scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)])
+            
+            NSLayoutConstraint.activate([contentView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
+                                         contentView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
+                                         contentView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+                                         contentView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
+                                         contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)])
+            
+     
+            
+            
+                    [leftStackView, rightStackView].forEach {
+                        $0.translatesAutoresizingMaskIntoConstraints = false
+                        contentView.addSubview($0)
+                    }
+
+            NSLayoutConstraint.activate([leftStackView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+                                         leftStackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+                                         leftStackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
+                                         leftStackView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width / 2)])
+
+            NSLayoutConstraint.activate([rightStackView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+                                         rightStackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+                                         rightStackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
+                                         rightStackView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width / 2)])
+            
+                    [yellowView, blackView].forEach {
+                        NSLayoutConstraint.activate([$0.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width / 2),
+                                                     $0.heightAnchor.constraint(equalToConstant: 600)])
+                        $0.translatesAutoresizingMaskIntoConstraints = false
+                        leftStackView.addArrangedSubview($0)
+                    }
+            
+                    [greenView, blueView].forEach {
+                        $0.translatesAutoresizingMaskIntoConstraints = false
+                        NSLayoutConstraint.activate([$0.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width / 2),
+                                                     $0.heightAnchor.constraint(equalToConstant: 600)])
+                        rightStackView.addArrangedSubview($0)
+                    }
+
     }
 }
-    
+
