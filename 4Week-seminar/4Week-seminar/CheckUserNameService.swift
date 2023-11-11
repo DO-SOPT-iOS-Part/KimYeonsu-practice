@@ -1,13 +1,19 @@
-
+//
+//  CheckUserService.swift
+//  4Week-seminar
+//
+//  Created by yeonsu on 11/11/23.
+//
 
 import Foundation
 
-class GetInfoService {
-    static let shared = GetInfoService()
+class CheckUserService {
+    static let shared = CheckUserService()
     private init() {}
     
-    func makeRequest(userId: Int) -> URLRequest {
-        let url = URL(string: "http://3.39.54.196/api/v1/members/\(userId)")!
+    func makeRequest(username: String) -> URLRequest {
+        print("username은 \(username)")
+        let url = URL(string: "http://3.39.54.196/api/v1/members/check?username=\(username)")!
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         let header = ["Content-Type": "application/json"]
@@ -17,16 +23,16 @@ class GetInfoService {
         return request
     }
     
-    func PostRegisterData(userId: Int) async throws -> UserInfoDataModel? {
+    func CheckUserNameService(username: String) async throws -> CheckUserNameModel? {
         do {
-            let request = self.makeRequest(userId: userId)
+            let request = self.makeRequest(username: username)
             let (data, response) = try await URLSession.shared.data(for: request)
             dump(request)
             guard let httpResponse = response as? HTTPURLResponse else {
                 throw NetworkError.responseError
             }
             dump(response)
-            return parseUserInfoData(data: data)
+            return CheckUserNameData(data: data)
         } catch {
             throw error
         }
@@ -34,10 +40,10 @@ class GetInfoService {
     }
     
     
-    private func parseUserInfoData(data: Data) -> UserInfoDataModel? {
+    private func CheckUserNameData(data: Data) -> CheckUserNameModel? {
         do {
             let jsonDecoder = JSONDecoder()
-            let result = try jsonDecoder.decode(UserInfoDataModel.self, from: data)
+            let result = try jsonDecoder.decode(CheckUserNameModel.self, from: data)
             return result
         } catch {
             print(error)

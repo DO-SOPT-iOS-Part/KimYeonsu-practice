@@ -8,8 +8,11 @@
 import Foundation
 
 class RegisterService {
+    
+    // ========= < 싱글톤 패턴 > =========
     static let shared = RegisterService()
     private init() {}
+    // ================================
     
     func makeRequestBody(usreName: String,
                          password: String,

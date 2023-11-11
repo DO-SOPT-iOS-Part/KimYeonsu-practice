@@ -10,9 +10,10 @@ import SnapKit
 import Then
 
 class ViewController: UIViewController {
-    private var usreName: String = ""
+    private var userName: String = ""
     private var password: String = ""
     private var nickName: String = ""
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,19 +28,33 @@ class ViewController: UIViewController {
     @objc private func registerButtonTap() {
         Task {
             do {
-                let status = try await RegisterService.shared.PostRegisterData(usreName: self.usreName,
+                let status = try await RegisterService.shared.PostRegisterData(usreName: self.userName,
                                                                                password: self.password,
                                                                                nickName: self.nickName)
-                if status == 201 {
-                    let alert = UIAlertController(title: "계정생성 성공", message: "와하하", preferredStyle: UIAlertController.Style.alert)
+                guard let isExist = try await CheckUserService.shared.CheckUserNameService(username: self.nickName)?.isExist else { return }
+                
+                print("isExist는요 \(isExist)")
+                
+                if isExist == true {
+                    print("요기")
+                    let alert = UIAlertController(title: "이메일 중복", message: "다시하세여", preferredStyle: UIAlertController.Style.alert)
                     let okAction =  UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
                     alert.addAction(okAction)
                     self.present(alert, animated: true)
                 } else {
-                    let alert = UIAlertController(title: "계정생성 실패", message: "흑흑", preferredStyle: UIAlertController.Style.alert)
-                    let okAction =  UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
-                    alert.addAction(okAction)
-                    self.present(alert, animated: true)
+                    if status == 201 {
+                        let alert = UIAlertController(title: "계정생성 성공", message: "와하하", preferredStyle: UIAlertController.Style.alert)
+                        let okAction =  UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                        alert.addAction(okAction)
+                        self.present(alert, animated: true)
+                    }
+                    else {
+                        print("요기조기")
+                        let alert = UIAlertController(title: "계정생성 실패", message: "흑흑", preferredStyle: UIAlertController.Style.alert)
+                        let okAction =  UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                        alert.addAction(okAction)
+                        self.present(alert, animated: true)
+                    }
                 }
                 print(status)
             } catch {
@@ -51,7 +66,7 @@ class ViewController: UIViewController {
     @objc private func textFieldDidEditing(_ textField: UITextField) {
         switch textField {
         case idTextField:
-            usreName = textField.text ?? ""
+            userName = textField.text ?? ""
         case passwordTextField:
             password = textField.text ?? ""
         default:
